@@ -18,7 +18,8 @@
 			<div class="box-body">
 			  <div class="row">
 				<div class="col">
-					<form novalidate="">
+					<form action="{{ route('admin.profile.store') }}" method="post" enctype="multipart/form-data">
+            @csrf
 					  <div class="row">
 						<div class="col-12">
 
@@ -55,17 +56,19 @@
                                 <div class="col-md-6">
                                     
                                     <div class="form-group">
-	                                    <h5>File Input Field <span class="text-danger">*</span></h5>
+	                                    <h5>File Input Field</h5>
 		                                    <div class="controls">
-			                                    <input type="file" name="profile_photo_path" class="form-control" required="" id="image">
+			                                    <input type="file" name="profile_photo_path" class="form-control" id="image">
 		                                    </div>
                                     </div>
 
                                 </div> <!-- end col md 6 -->
 
                                 <div class="col-md-6">
+                                  <input type="hidden" value="{{ $editData->profile_photo_path }}" name="old_path">
+                                  <input type="hidden" value="{{ $editData->id }}" name="id">
                                     
-                                    <img id="showImage" src="{{ (!empty($editData->profile_photo_path))? url('upload/admin_images/'.profile_photo_path):url('upload/no_image.jpg')  }}" style="width: 100px; height:100px;" alt="">
+                                    <img id="showImage" class="rounded-circle" src="{{ (!empty($editData->profile_photo_path)) ? url($editData->profile_photo_path) : url('upload/no_image.jpg')  }}" style="width: 100px; height:100px;" alt="">
 
                                 </div> <!-- end col md 6 -->
 
