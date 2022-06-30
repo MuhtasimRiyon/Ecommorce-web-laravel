@@ -34,7 +34,7 @@
                                         <div class="controls">
                                             <input type="text" name="name" class="form-control" required="" value="{{ $editData->name }}">
                                         </div>
-							        </div>
+							                      </div>
 
                                  </div> <!-- end col md 6 -->
                                  

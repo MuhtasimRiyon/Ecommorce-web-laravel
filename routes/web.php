@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
+use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Frontend\IndexCrontroller;
-
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,8 +45,20 @@ Route::post('/admin/profile/update/password',[AdminProfileController::class, 'ad
 //user all route
 
 Route::middleware(['auth:sanctum,web', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+    $id = Auth::user()->id;
+    $user = User::find($id);
+    return view('dashboard',compact('user'));
 })->name('dashboard');
 
 //Home page
 Route::get('/',[IndexCrontroller::class, 'index']);
+Route::get('/user/logout',[IndexCrontroller::class, 'UserLogout'])->name('user.logout');
+Route::get('/user/profile',[IndexCrontroller::class, 'UserProfile'])->name('user.profile');
+Route::post('/user/profile/store',[IndexCrontroller::class, 'UserProfileStore'])->name('user.profile.store');
+Route::get('/user/change/password',[IndexCrontroller::class, 'UserChangePass'])->name('change.password');
+Route::post('/user/password/update',[IndexCrontroller::class, 'UserPassUpdate'])->name('user.pass.update');
+
+// admin brand all route
+Route::prefix('brand')->group(function(){
+    Route::get('/view',[BrandController::class, 'BrandView'])->name('all.brand');
+});
